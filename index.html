@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام إدارة وتحليل نتائج الطلاب</title>
+    <style>
+        :root {
+            --primary: #2b5876;
+            --secondary: #4e4376;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+            --bg: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: var(--primary);
+        }
+
+   
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+  
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: right;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+    
+
+        .badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+            color: white;
+            display: inline-block;
+        }
+        .bg-success { background-color: var(--success); }
+        .bg-danger { background-color: var(--danger); }
+        .bg-warning { background-color: #e0a800; }
+
+
+        .controls {
+            text-align: center;
+            margin: 25px 0;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+        }
+
+    
+
+        .summary-box {
+            display: flex;
+            justify-content: space-around;
+            background: #eef2f5;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .summary-item {
+            text-align: center;
+        }
+
+        .summary-item span {
+            display: block;
+            font-size: 1.4em;
+            font-weight: bold;
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1> نظام إدارة وتحليل نتائج الطلاب</h1>
+
+     
+
+        <div class="controls">
+            <button onclick="renderMainTable()">عرض النتائج العامة للطلاب </button>
+            <button class="btn-secondary" onclick="runMercyCommittee()">تطبيق لجنة الرأفة على المتعثرين </button>
+        </div>
+
+
+        <div class="card" id="mainResultsSection" style="display: none;">
+            <h2>قائمة النتائج العامة</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>رقم الجلوس</th>
+                        <th>الاسم</th>
+                        <th>الدرجات</th>
+                        <th>نسبة الحضور</th>
+                        <th>المتوسط</th>
+                        <th>التقدير</th>
+                        <th>النتيجة</th>
+                    </tr>
+                </thead>
+                <tbody id="studentsTableBody">
+                    <!-- Dynamic Rows Insertion -->
+                </tbody>
+            </table>
+        </div>
+
+    
+
+        <div class="card" id="mercySection" style="display: none;">
+            <h2>نتائج الطلاب بعد قرارات لجنة الرأفة</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>رقم الجلوس</th>
+                        <th>الاسم</th>
+                        <th>المتوسط الأصلي</th>
+                        <th>المتوسط المعدل (+5)</th>
+                        <th>التقدير الجديد</th>
+                        <th>الحالة الجديدة</th>
+                    </tr>
+                </thead>
+                <tbody id="mercyTableBody">
+                    <!-- Dynamic Mercy Rows Insertion -->
+                </tbody>
+            </table>
+
+            <div class="summary-box">
+                <div class="summary-item">
+                    المستفيدون من الرأفة
+                    <span id="boostedCount">0</span>
+                </div>
+                <div class="summary-item">
+                    متوسط درجات المتعثرين بعد التعديل
+                    <span id="boostedAvg">0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
